@@ -5,8 +5,13 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
+    "test": "mocha test/*.test.js --timeout 5000 --exit"
   },
   "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  }
   "dependencies": {
     "dayjs": "^1.11.10",
     "pg": "^8.13.1"
