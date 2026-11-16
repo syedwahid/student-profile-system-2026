@@ -47,6 +47,28 @@ async function addStudent(name, age, grade, email) {
     return result.rows[0];
 }
 
+async function updateStudent(id, name, age, grade, email) {
+    if (!isValidEmail(email)) {
+        throw new Error('Invalid email address');
+    }
+    const result = await pool.query(
+        'UPDATE students SET name = $1, age = $2, grade = $3, email = $4 WHERE id = $5 RETURNING id, name, age, grade, email',
+        [name, age, grade, email, id]
+    );
+    if (result.rows.length === 0) {
+        throw new Error('Student not found');
+    }
+    return result.rows[0];
+}
+
+async function deleteStudent(id) {
+    const result = await pool.query('DELETE FROM students WHERE id = $1 RETURNING id', [id]);
+    if (result.rows.length === 0) {
+        throw new Error('Student not found');
+    }
+    return result.rows[0];
+}
+
 async function validateAllEmails() {
     const students = await getAllStudents();
     return students
@@ -61,6 +83,8 @@ module.exports = {
     getAverageAge,
     getGradeDistribution,
     addStudent,
+    updateStudent,
+    deleteStudent,
     isValidEmail,
     validateAllEmails
 };
