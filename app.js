@@ -34,6 +34,7 @@ function renderPage(students, avgAge, gradeDistribution) {
 <head>
 <meta charset="UTF-8">
 <title>Student Profile System</title>
+<p style="font-size:0.78rem;color:#9099a6;margin-top:-6px;">v1.0</p>
 <style>
   :root{--bg:#f1f5f9;--panel:#ffffff;--text:#1c2530;--muted:#64748b;--border:#e2e8f0;}
   *{box-sizing:border-box;}
