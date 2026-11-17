@@ -74,7 +74,7 @@ function renderPage(students, avgAge, gradeDistribution) {
 <body>
   <div class="hero">
     <h1 style="color:#f59e0b;">Student Profile System</h1>
-    <p style="font-size:0.78rem;color:#dbeafe;margin-top:-6px;">v1.2</p>
+    <p style="font-size:0.78rem;color:#dbeafe;margin-top:-6px;">v1.3</p>
     <p>Backed by PostgreSQL · Module 6 onward</p>
   </div>
   <div class="wrap">
