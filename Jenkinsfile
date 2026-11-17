@@ -4,6 +4,7 @@ pipeline {
         IMAGE_NAME       = 'student-profile-system-2026'
         NAMESPACE        = 'student-profile-system-2026'
         MINIKUBE_PROFILE = 'scs4004'
+        KUBECONFIG       = '/var/jenkins_home/.kube-ci/config'
     }
     stages {
         stage('Checkout Code') {
@@ -24,7 +25,12 @@ pipeline {
         }
         stage('Load Image into Minikube') {
             steps {
-                sh "minikube image load ${IMAGE_NAME}:${BUILD_NUMBER} -p ${MINIKUBE_PROFILE}"
+                sh """
+                    docker save ${IMAGE_NAME}:${BUILD_NUMBER} -o /tmp/${IMAGE_NAME}-${BUILD_NUMBER}.tar
+                    docker exec -i ${MINIKUBE_PROFILE} ctr -n k8s.io images import - < /tmp/${IMAGE_NAME}-${BUILD_NUMBER}.tar
+                    docker exec -i ${MINIKUBE_PROFILE}-m02 ctr -n k8s.io images import - < /tmp/${IMAGE_NAME}-${BUILD_NUMBER}.tar
+                    rm /tmp/${IMAGE_NAME}-${BUILD_NUMBER}.tar
+                """
             }
         }
         stage('Deploy to Kubernetes') {
